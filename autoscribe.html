@@ -21,55 +21,85 @@
     <title>JSON Creator</title>
   </head>
   <body>
-    <center><h1>ljsimpleregisterlookup</h1></center>
-<form>
+    <center><h1>lj simple register lookup View Maker</h1></center><br>
+<form id="help">
   <div class="form-group row">
-    <label for="title" class="col-4 col-form-label">Title</label> 
-    <div class="col-8">
-      <input id="title" name="title" type="text" required="required" class="form-control here">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="Registers" class="col-4 col-form-label">Registers</label> 
-    <div class="col-8">
-      <input id="Registers" name="Registers" type="text" class="form-control here">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Devices</label> 
+    <label class="col-4">Type of view</label> 
     <div class="col-8">
       <label class="custom-control custom-radio">
-        <input name="Devices" type="radio" id="all" class="custom-control-input" value="All"> 
+        <input name="Type" type="radio" id="auto" class="custom-control-input" value="auto"> 
         <span class="custom-control-indicator"></span> 
-        <span class="custom-control-description">All</span>
+        <span class="custom-control-description">Auto Scribe</span>
       </label>
       <label class="custom-control custom-radio">
-        <input name="Devices" type="radio" id="T7" class="custom-control-input" value="T7"> 
+        <input name="Type" type="radio" id="error" class="custom-control-input" value="error"> 
         <span class="custom-control-indicator"></span> 
-        <span class="custom-control-description">T7</span>
+        <span class="custom-control-description">Error Scribe</span>
       </label>
       <label class="custom-control custom-radio">
-        <input name="Devices" type="radio" id="T4" class="custom-control-input" value="T4"> 
+        <input name="Type" type="radio" id="Devices" class="custom-control-input" value="Devices"> 
         <span class="custom-control-indicator"></span> 
-        <span class="custom-control-description">T4</span>
+        <span class="custom-control-description">Devices</span>
       </label>
     </div>
   </div>
-  <div class="form-group row">
-    <label class="col-4">Expanded</label> 
-    <div class="col-8">
-      <label class="custom-control custom-radio">
-        <input name="Expanded" id="yes" type="radio" class="custom-control-input" value=true> 
-        <span class="custom-control-indicator"></span> 
-        <span class="custom-control-description">Yes</span>
-      </label>
-      <label class="custom-control custom-radio">
-        <input name="Expanded" id="no" type="radio" class="custom-control-input" value="false"> 
-        <span class="custom-control-indicator"></span> 
-        <span class="custom-control-description">No</span>
-      </label>
+  <div id="autoscribe"> 
+    <div class="form-group row">
+      <label for="title" class="col-4 col-form-label">Title</label> 
+      <div class="col-8">
+        <input id="title" name="title" type="text" class="form-control here">
+      </div>
     </div>
-  </div> 
+    <div class="form-group row">
+      <label for="Registers" class="col-4 col-form-label">Registers</label> 
+      <div class="col-8">
+        <input id="Registers" name="Registers" type="text" class="form-control here">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-4">Devices</label> 
+      <div class="col-8">
+        <label class="custom-control custom-radio">
+          <input name="Devices" type="radio" id="all" class="custom-control-input" value="All"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">All</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input name="Devices" type="radio" id="T7" class="custom-control-input" value="T7"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">T7</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input name="Devices" type="radio" id="T4" class="custom-control-input" value="T4"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">T4</span>
+        </label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-4">Expanded</label> 
+      <div class="col-8">
+        <label class="custom-control custom-radio">
+          <input name="Expanded" id="true" type="radio" class="custom-control-input" value="true"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">Yes</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input name="Expanded" id="false" type="radio" class="custom-control-input" value="false"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">No</span>
+        </label>
+      </div>
+    </div> 
+  </div>
+  <div id="errorscribe">
+    <div class="form-group row">
+      <label for="title" class="col-4 col-form-label">Errors</label> 
+      <div class="col-8">
+        <input id="errordata" name="errordata" type="text" class="form-control here">
+      </div>
+    </div>
+  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Preview</button>
@@ -78,15 +108,25 @@
 </form>
 <p>JSON Code:</p>
 <p id="demo"></p>
+<p>View</p>
+<p id="View"></p>
 <iframe id="calendar" src="about:blank" width="1000" height="450" frameborder="0"></iframe>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script type="text/javascript">
-  var urlParams = new URLSearchParams(window.location.search);
+   var urlParams = new URLSearchParams(window.location.search);
+  var Type = urlParams.get('Type'); 
   var Title = urlParams.get('title'); 
   var Registers = urlParams.get('Registers'); 
   var Devices = urlParams.get('Devices'); 
   var Expanded = urlParams.get('Expanded'); 
+  var errordata = urlParams.get('errordata'); 
   document.getElementById("title").value = Title;
   document.getElementById("Registers").value = Registers;
+  document.getElementById("errordata").value = errordata;
+
   if(Devices == 'All'){
       document.getElementById("all").checked = true;
   }
@@ -96,28 +136,63 @@
   if(Devices == 'T4'){
       document.getElementById("T4").checked = true;
   }
+  if(Type == 'auto'){
+      document.getElementById("auto").checked = true;
+  }
+  if(Type == 'error'){
+      document.getElementById("error").checked = true;
+  }
+  if(Type == 'Devices'){
+      document.getElementById("Devices").checked = true;
+  }
   if(Expanded == "true"){
-      document.getElementById("yes").checked = true;
+      document.getElementById("true").checked = true;
   }
   if(Expanded == "false"){
-      document.getElementById("no").checked = true;
+      document.getElementById("false").checked = true;
   }
-  var json = '{"TYPE": "Auto", "TITLE":"' + Title + '", "REGISTER":"' + Registers + '", "Expanded" : ' + Expanded + ' ';
-  if(Devices != 'All'){
-    json += ', "Device": "' + Devices + '"';
-  }
-    json += '}';
-    url = 'http://127.0.0.1:5000/decodeview?input=' + json;
-document.getElementById('calendar').src = url;
-document.getElementById("demo").innerHTML = json;
+  $( document ).ready(function() {
+   var t = $('input[name=Type]:checked', '#help').val(); 
+  changeview(t);
+     });
+ $('#help input').on('change', function() {
+   var t = $('input[name=Type]:checked', '#help').val(); 
+  changeview(t);
+ });
+
+ function changeview(t) {
+     if(t == "auto"){
+       document.getElementById("autoscribe").style.display = "block";
+       document.getElementById('errorscribe').style.display = "none";
+       var json = '{"TYPE": "Auto", "TITLE":"' + Title + '", "REGISTER":"' + Registers + '", "Expanded" : ' + Expanded + ' ';
+       if(Devices != 'All'){
+       json += ', "Device": "' + Devices + '"';
+      }
+       json += '}';
+       url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
+      document.getElementById('calendar').src = url;
+       document.getElementById("demo").innerHTML = json;
+    } else if(t == "error") {
+      
+      var json = '{"TYPE": "error", "ERRORS":"' + errordata + '"}';
+       url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
+      document.getElementById('calendar').src = url;
+       document.getElementById("demo").innerHTML = json;
+        document.getElementById('autoscribe').style.display = "none";
+        document.getElementById("errorscribe").style.display = "block";
+    } else{
+      document.getElementById('errorscribe').style.display = "none";
+       document.getElementById('autoscribe').style.display = "none";
+    }
+}
+
+  
  
 </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
   </body>
 </html>
 
