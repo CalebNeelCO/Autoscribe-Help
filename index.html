@@ -100,6 +100,76 @@
       </div>
     </div>
   </div>
+  <div id="Devices-View"> 
+    <div class="form-group row">
+      <label for="title" class="col-4 col-form-label">Title</label> 
+      <div class="col-8">
+        <input id="title1" name="title1" type="text" class="form-control here">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-4">Devices</label> 
+      <div class="col-8">
+        <label class="custom-control custom-radio">
+          <input name="Devices1" type="radio" id="T71" class="custom-control-input" value="T7"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">T7</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input name="Devices1" type="radio" id="T41" class="custom-control-input" value="T4"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">T4</span>
+        </label>
+      </div>
+    </div>
+     <div class="form-group row">
+    <label for="Tags" class="col-4">Tags</label> 
+    <div class="col-8">
+      <select multiple="multiple" id="Tags" name="Tags[]" class="select form-control" onchange="getMultipleSelected(this.id)">
+        <option value="All Tags">All Tags</option>
+        <option value="AIN">AIN</option>
+        <option value="AIN_EF">AIN_EF</option>
+        <option value="ASYNCH">ASYNCH</option>
+        <option value="CONFIG">CONFIG</option>
+        <option value="CORE">CORE</option>
+        <option value="DAC">DAC</option>
+        <option value="DIO">DIO</option>
+        <option value="DIO_EF">DIO_EF</option>
+        <option value="ETHERNET">ETHERNET</option>
+        <option value="FILE_IO">FILE_IO</option>
+        <option value="I2C">I2C</option>
+        <option value="INTFLASH">INTFLASH</option>
+        <option value="LUA">LUA</option>
+        <option value="ONEWIRE">ONEWIRE</option>
+        <option value="RTC">RTC</option>
+        <option value="SBUS">SBUS</option>
+        <option value="SPI">SPI</option>
+        <option value="STREAM">STREAM</option>
+        <option value="TDAC">TDAC</option>
+        <option value="UART">UART</option>
+        <option value="USER_RAM">USER_RAM</option>
+        <option value="WATCHDOG">WATCHDOG</option>
+        <option value="WIFI">WIFI</option>
+      </select>
+    </div>
+  </div> 
+   <div class="form-group row">
+      <label class="col-4">Expanded</label> 
+      <div class="col-8">
+        <label class="custom-control custom-radio">
+          <input name="Expanded1" id="true1" type="radio" class="custom-control-input" value="true"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">Yes</span>
+        </label>
+        <label class="custom-control custom-radio">
+          <input name="Expanded1" id="false1" type="radio" class="custom-control-input" value="false"> 
+          <span class="custom-control-indicator"></span> 
+          <span class="custom-control-description">No</span>
+        </label>
+      </div>
+    </div> 
+    <div id="autoscribe"> 
+  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Preview</button>
@@ -119,22 +189,34 @@
    var urlParams = new URLSearchParams(window.location.search);
   var Type = urlParams.get('Type'); 
   var Title = urlParams.get('title'); 
+  var Title1 = urlParams.get('title1'); 
   var Registers = urlParams.get('Registers'); 
   var Devices = urlParams.get('Devices'); 
+  var Devices1 = urlParams.get('Devices1'); 
   var Expanded = urlParams.get('Expanded'); 
+  var Expanded1 = urlParams.get('Expanded1'); 
   var errordata = urlParams.get('errordata'); 
+  var Tags;
+  var t;
   document.getElementById("title").value = Title;
+  document.getElementById("title1").value = Title1;
   document.getElementById("Registers").value = Registers;
   document.getElementById("errordata").value = errordata;
-
+  
   if(Devices == 'All'){
       document.getElementById("all").checked = true;
   }
   if(Devices == 'T7'){
-      document.getElementById("T7").checked = true;
+      document.getElementById("T71").checked = true;
   }
   if(Devices == 'T4'){
-      document.getElementById("T4").checked = true;
+      document.getElementById("T41").checked = true;
+  }
+  if(Devices1 == 'T71'){
+      document.getElementById("T71").checked = true;
+  }
+  if(Devices1 == 'T41'){
+      document.getElementById("T41").checked = true;
   }
   if(Type == 'auto'){
       document.getElementById("auto").checked = true;
@@ -151,38 +233,71 @@
   if(Expanded == "false"){
       document.getElementById("false").checked = true;
   }
+  if(Expanded1 == "true"){
+      document.getElementById("true1").checked = true;
+  }
+  if(Expanded1 == "false"){
+      document.getElementById("false1").checked = true;
+  }
   $( document ).ready(function() {
-   var t = $('input[name=Type]:checked', '#help').val(); 
+    t = $('input[name=Type]:checked', '#help').val(); 
   changeview(t);
      });
  $('#help input').on('change', function() {
-   var t = $('input[name=Type]:checked', '#help').val(); 
+    t = $('input[name=Type]:checked', '#help').val(); 
   changeview(t);
  });
-
+function getMultipleSelected(fieldID){
+  var elements = document.getElementById('Tags').childNodes; 
+            var selectedKeyValue = {};
+            var arrayOfSelecedIDs=[];
+            for(i=0;i<elements.length;i++){
+              if(elements[i].selected){
+               selectedKeyValue[elements[i].value]=elements[i].textContent;
+               arrayOfSelecedIDs.push(elements[i].value)
+              }
+            }
+            if(arrayOfSelecedIDs[0]=="All Tags"){
+               Tags ="ALL_TAGS_NAME";
+            }
+            else{
+            Tags = arrayOfSelecedIDs.join( ", " );
+            }
+            changeview(t);
+          }
  function changeview(t) {
      if(t == "auto"){
        document.getElementById("autoscribe").style.display = "block";
        document.getElementById('errorscribe').style.display = "none";
+      document.getElementById("Devices-View").style.display ="none";
        var json = '{"TYPE": "Auto", "TITLE":"' + Title + '", "REGISTER":"' + Registers + '", "Expanded" : ' + Expanded + ' ';
        if(Devices != 'All'){
        json += ', "Device": "' + Devices + '"';
       }
        json += '}';
-       url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
+      var url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
       document.getElementById('calendar').src = url;
        document.getElementById("demo").innerHTML = json;
+      document.getElementById("View").innerHTML = "[view:autoscribe==" + json + "]";
     } else if(t == "error") {
       
       var json = '{"TYPE": "error", "ERRORS":"' + errordata + '"}';
-       url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
+       var url = url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
       document.getElementById('calendar').src = url;
        document.getElementById("demo").innerHTML = json;
+       document.getElementById("View").innerHTML = "[view:autoscribe==" + json + "]";
         document.getElementById('autoscribe').style.display = "none";
         document.getElementById("errorscribe").style.display = "block";
+        document.getElementById("Devices-View").style.display ="none";
     } else{
+      var json = '{"TYPE": "Device", "TAGS":"'  + Tags+ '", "Expanded" : ' + Expanded1 + ', "Device": "' + Devices1 + '"}';
+       var url = 'http://127.0.0.1:5000/decodeview?input=' + json;
+      document.getElementById('calendar').src = url;
+       document.getElementById("demo").innerHTML = json;
+       document.getElementById("View").innerHTML = "[view:autoscribe==" + json + "]";
       document.getElementById('errorscribe').style.display = "none";
        document.getElementById('autoscribe').style.display = "none";
+       document.getElementById("Devices-View").style.display = "block";
     }
 }
 
