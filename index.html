@@ -92,6 +92,7 @@
       </div>
     </div> 
   </div>
+
   <div id="errorscribe">
     <div class="form-group row">
       <label for="title" class="col-4 col-form-label">Errors</label> 
@@ -168,25 +169,39 @@
         </label>
       </div>
     </div> 
-    <div id="autoscribe"> 
-  </div>
-  <div class="form-group row">
+ </div>
+ <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Preview</button>
     </div>
   </div>
+  
 </form>
 <p>JSON Code:</p>
 <p id="demo"></p>
 <p>View</p>
 <p id="View"></p>
-<iframe id="calendar" src="about:blank" width="1000" height="450" frameborder="0"></iframe>
-
+<center>
+<iframe id="calendar" src="about:blank" width="1000" height="600" frameborder="0"></iframe>
+</center>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script type="text/javascript">
-   var urlParams = new URLSearchParams(window.location.search);
+  var host = window.location.host;
+  var BASE_URL;
+  console.log(host);
+  deployed = host.indexOf("0.0.0.0") == -1;
+  deployed = deployed && host.indexOf("127.0.0.1") == -1;
+  deployed = deployed && host.indexOf("localhost") == -1;
+  deployed = deployed && host.indexOf("c9") == -1;
+  if (deployed) {
+     BASE_URL = "https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=";
+  } else {
+     BASE_URL = 'http://127.0.0.1:5000/decodeview?input=';
+  }
+
+  var urlParams = new URLSearchParams(window.location.search);
   var Type = urlParams.get('Type'); 
   var Title = urlParams.get('title'); 
   var Title1 = urlParams.get('title1'); 
