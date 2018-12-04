@@ -190,12 +190,8 @@
 <script type="text/javascript">
   var host = window.location.host;
   var BASE_URL;
-  console.log(host);
-  deployed = host.indexOf("0.0.0.0") == -1;
-  deployed = deployed && host.indexOf("127.0.0.1") == -1;
-  deployed = deployed && host.indexOf("localhost") == -1;
-  deployed = deployed && host.indexOf("c9") == -1;
-  if (deployed) {
+ 
+  if (host == "calebneelco.github.io") {
      BASE_URL = "https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=";
   } else {
      BASE_URL = 'http://127.0.0.1:5000/decodeview?input=';
@@ -290,14 +286,14 @@ function getMultipleSelected(fieldID){
        json += ', "Device": "' + Devices + '"';
       }
        json += '}';
-      var url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
+      var url = BASE_URL + json;
       document.getElementById('calendar').src = url;
        document.getElementById("demo").innerHTML = json;
       document.getElementById("View").innerHTML = "[view:autoscribe==" + json + "]";
     } else if(t == "error") {
       
       var json = '{"TYPE": "error", "ERRORS":"' + errordata + '"}';
-       var url = url = 'https://ljsimpleregisterlookup.herokuapp.com/decodeview?input=' + json;
+       var url = url = BASE_URL + json;
       document.getElementById('calendar').src = url;
        document.getElementById("demo").innerHTML = json;
        document.getElementById("View").innerHTML = "[view:autoscribe==" + json + "]";
@@ -306,7 +302,7 @@ function getMultipleSelected(fieldID){
         document.getElementById("Devices-View").style.display ="none";
     } else{
       var json = '{"TYPE": "Device", "TAGS":"'  + Tags+ '", "Expanded" : ' + Expanded1 + ', "Device": "' + Devices1 + '"}';
-       var url = 'http://127.0.0.1:5000/decodeview?input=' + json;
+       var url = BASE_URL + json;
       document.getElementById('calendar').src = url;
        document.getElementById("demo").innerHTML = json;
        document.getElementById("View").innerHTML = "[view:autoscribe==" + json + "]";
